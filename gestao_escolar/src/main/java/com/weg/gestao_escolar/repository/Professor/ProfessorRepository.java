@@ -7,7 +7,6 @@ import java.util.Optional;
 import com.weg.gestao_escolar.model.Professor;
 
 public interface ProfessorRepository {
-
     Professor saveProfessor(Professor professor) throws SQLException;
     List<Professor> findAllProfessor() throws SQLException;
     Optional<Professor> findPorId(Long id) throws SQLException;

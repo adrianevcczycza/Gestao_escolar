@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.weg.gestao_escolar.Connection.Conexao;
+import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDTO;
 import com.weg.gestao_escolar.model.Aluno;
 
 @Repository
@@ -48,7 +49,7 @@ public class AlunoRepositoryImpl implements AlunoRepository{
     }
 
     @Override
-    public List<Aluno> findAllContatos() throws SQLException {
+    public List<Aluno> findAllAlunos() throws SQLException {
         List<Aluno> alunos = new ArrayList<>();
         String query = """
                     SELECT id
@@ -83,8 +84,7 @@ public class AlunoRepositoryImpl implements AlunoRepository{
         return alunos;
     }
 
-    @Override
-    public Optional<Aluno> findPorId(Long id) throws SQLException {
+    public Optional<Aluno> findAlunoPorId(Long id) throws SQLException {
         String query = """
                     SELECT nome
                           ,email
@@ -134,26 +134,40 @@ public class AlunoRepositoryImpl implements AlunoRepository{
         }
         return ;
     }
+
     @Override
-    public void atualizarAluno(Aluno aluno) throws SQLException {
-        String command = """
+    public Aluno atualizarAluno(Aluno aluno) throws SQLException {
+                String command = """
                 UPDATE aluno
                 SET nome =? ,
-                email =?, 
+                email =?,
                 matricula =?, 
-                data_nascimento =?
-                WHERE  id 
+                data_nascimento = ?
+                WHERE  id = ?
                 """;
         try(Connection conn = Conexao.getConexao();
             PreparedStatement stmt = conn.prepareStatement(command)){
 
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
-            stmt.setString(3,aluno.getMatricula());
+            stmt.setString(3, aluno.getMatricula());
             stmt.setDate(4, java.sql.Date.valueOf(aluno.getData_nascimento()));
 
             stmt.executeUpdate();
         }
+        return aluno;
+    }
+
+    @Override
+    public boolean existsPorId(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existsPorId'");
+    }
+
+    @Override
+    public void atualizarAluno() throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'atualizarAluno'");
     }
 }
         

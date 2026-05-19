@@ -1,6 +1,4 @@
 package com.weg.gestao_escolar.model;
-
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Aluno {

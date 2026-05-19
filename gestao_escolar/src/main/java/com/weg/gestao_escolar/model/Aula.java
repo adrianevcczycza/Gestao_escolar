@@ -1,25 +1,28 @@
 package com.weg.gestao_escolar.model;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 public class Aula {
-    private Long id, turma_id;
-
-    private LocalDateTime data_hora;
-
+    private Long id;
+    private Long turma_id;
+    private LocalDate data_hora;
     private String assunto;
+    
 
-    public Aula(Long id, Long turma_id, LocalDateTime data_hora, String assunto) {
+    public Aula(Long id, Long turma_id, LocalDate data_hora, String assunto) {
         this.id = id;
         this.turma_id = turma_id;
         this.data_hora = data_hora;
         this.assunto = assunto;
     }
 
-    public Aula(Long turma_id, LocalDateTime data_hora, String assunto) {
+    public Aula(Long turma_id, LocalDate data_hora, String assunto) {
         this.turma_id = turma_id;
         this.data_hora = data_hora;
         this.assunto = assunto;
+    }
+
+    public Aula(String nome, String email, Long matricula, LocalDate data_nascimento) {
+        //TODO Auto-generated constructor stub
     }
 
     public Long getId() {
@@ -38,11 +41,11 @@ public class Aula {
         this.turma_id = turma_id;
     }
 
-    public LocalDateTime getData_hora() {
+    public LocalDate getData_hora() {
         return data_hora;
     }
 
-    public void setData_hora(LocalDateTime data_hora) {
+    public void setData_hora(LocalDate data_hora) {
         this.data_hora = data_hora;
     }
 

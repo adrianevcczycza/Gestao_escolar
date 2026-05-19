@@ -4,35 +4,48 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDTO;
 import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDTO;
+import com.weg.gestao_escolar.mapper.AlunoMapper;
 import com.weg.gestao_escolar.model.Aluno;
+import com.weg.gestao_escolar.repository.Aluno.AlunoRepository;
 
+@Service
 public class AlunoServiceImpl implements AlunoService{
+    private AlunoRepository alunoRepository;
+    private AlunoMapper alunoMapper;
+
 
     @Override
-    public Aluno saveAluno(Aluno aluno) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveAluno'");
-    }
-
-    @Override
-    public List<Aluno> findAllContatos() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllContatos'");
+    public AlunoRespostaDTO saveAluno(AlunoRequisicaoDTO requisicaoDto) throws SQLException {
+        
+        Aluno aluno
+        = alunoMapper.paraEntidade(requisicaoDto);
+        alunoRepository.saveAluno(aluno);
+        return alunoMapper.paraRespostaDto(aluno);
     }
 
     @Override
     public Optional<Aluno> findPorId(Long id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findPorId'");
-    }
+       Aluno aluno=AlunoRepository.findAlunoPorId(id)
+                .orElseThrow(() -> new RuntimeException("O contato não foi encontrado!"));
 
+        return Optional.ofNullable(aluno);
+    }
     @Override
-    public void atualizarAluno(Aluno aluno) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atualizarAluno'");
-    }
+    public AlunoRespostaDTO atualizarAluno(Long id, AlunoRequisicaoDTO alunoRequisicaoDTO) throws SQLException {
+            if(!alunoRepository.existsPorId(id)){
+            throw new RuntimeException("Usuário não encontrado!");
+        }
 
+        Aluno aluno = alunoMapper.paraEntidade(alunoRequisicaoDTO);
+        aluno.setId(id);
+        aluno = alunoRepository.atualizarAluno(aluno);
+
+        return alunoMapper.paraRespostaDto(aluno);
+    }
     @Override
     public void deletePorId(Long id) throws SQLException {
         // TODO Auto-generated method stub
@@ -40,15 +53,9 @@ public class AlunoServiceImpl implements AlunoService{
     }
 
     @Override
-    public Aluno buscarPorId(Long id) {
+    public AlunoRespostaDTO buscarPorId(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buscarPorId'");
-    }
-
-    @Override
-    public Aluno saveAluno(AlunoRespostaDTO alunoRespostaDTO) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveAluno'");
     }
 
     @Override
@@ -56,5 +63,4 @@ public class AlunoServiceImpl implements AlunoService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllAlunos'");
     }
-
 }

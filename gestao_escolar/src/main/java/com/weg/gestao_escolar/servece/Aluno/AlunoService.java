@@ -8,16 +8,15 @@ import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDTO;
 import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDTO;
 import com.weg.gestao_escolar.model.Aluno;
 
+
 public interface AlunoService {
 
-    Aluno saveAluno(AlunoRequisicaoDTO requisicaoDto) throws SQLException;
-    List<Aluno> findAllContatos() throws SQLException;
+    AlunoRespostaDTO saveAluno(AlunoRequisicaoDTO requisicaoDto) throws SQLException;
     Optional<Aluno> findPorId(Long id) throws SQLException;
-    void atualizarAluno(Aluno aluno) throws SQLException;
     void deletePorId(Long id) throws SQLException;
-    Aluno buscarPorId(Long id);
+    AlunoRespostaDTO buscarPorId(Long id);
     List<Aluno> findAllAlunos() throws SQLException;
-    Aluno saveAluno(Aluno aluno) throws SQLException;
+    AlunoRespostaDTO atualizarAluno(Long id, AlunoRequisicaoDTO aluno) throws SQLException;
 
-    
+
 }

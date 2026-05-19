@@ -10,18 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weg.gestao_escolar.Connection.Conexao;
 import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDTO;
 import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDTO;
 import com.weg.gestao_escolar.model.Aluno;
@@ -33,14 +32,14 @@ public class AlunoController {
      private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService){
-        this.alunoService=alunoService;
+        this.alunoService= alunoService;
     }
 
     @PostMapping
     public AlunoRespostaDTO postContato(
             @RequestBody AlunoRequisicaoDTO requisicaoDto){
         try{
-            AlunoRespostaDTO repostaDTO = alunoService.saveAluno(AlunoRequisicaoDTO);
+            AlunoRespostaDTO repostaDTO = alunoService.saveAluno( requisicaoDto);
             return repostaDTO;
         }catch (SQLException | RuntimeException e){
             throw new RuntimeException(e.getMessage());
@@ -48,9 +47,9 @@ public class AlunoController {
     }
 
     @GetMapping
-    public List<Aluno> findAllContatos(){
+    public List<Aluno> findAllAlunos(){
         try{
-            List<Aluno> alunos = alunoService.findAllContatos();
+            List<Aluno> alunos = alunoService.findAllAlunos();
             return alunos;
         }catch (SQLException | RuntimeException e){
             throw new RuntimeException(e.getMessage());
@@ -60,7 +59,7 @@ public class AlunoController {
 
     public Optional<Aluno> findPorId() {
         try{
-            List<Aluno> alunos = alunoService.findAllContatos();
+            List<Aluno> alunos = alunoService.findAllAlunos();
             return Optional.empty();
         }catch (SQLException | RuntimeException e){
             throw new RuntimeException(e.getMessage());
@@ -69,10 +68,9 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public void atualizarAluno(@PathVariable Long id, @RequestBody Aluno aluno){
+    public AlunoRespostaDTO atualizarAluno(@PathVariable Long id, @RequestBody AlunoRequisicaoDTO aluno){
         try{
-            alunoService.atualizarAluno(aluno);
-            return alunos;
+            return alunoService.atualizarAluno(id, aluno);
         }catch(SQLException | RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }

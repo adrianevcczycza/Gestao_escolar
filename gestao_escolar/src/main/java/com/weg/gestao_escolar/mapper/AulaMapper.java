@@ -1,18 +1,16 @@
 package com.weg.gestao_escolar.mapper;
 
-import org.springframework.stereotype.Component;
-
-import com.weg.gestao_escolar.dto.aluno.AlunoRequisicaoDTO;
 import com.weg.gestao_escolar.dto.aluno.AlunoRespostaDTO;
+import com.weg.gestao_escolar.dto.aula.AulaRequisicaoDTO;
 import com.weg.gestao_escolar.model.Aluno;
+import com.weg.gestao_escolar.model.Aula;
 
-@Component
-public class AlunoMapper {
+public class AulaMapper {
 
-    public Aluno paraEntidade(
-            AlunoRequisicaoDTO requisicaoDto
+        public Aula paraEntidade(
+            AulaRequisicaoDTO requisicaoDto
     ){
-        return new Aluno(
+        return new Aula(
                 requisicaoDto.nome(),
                 requisicaoDto.email(),
                 requisicaoDto.matricula(),
@@ -31,4 +29,5 @@ public class AlunoMapper {
         );
 
     }
+
 }
